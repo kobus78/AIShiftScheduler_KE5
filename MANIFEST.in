@@ -2,5 +2,4 @@ include settings.ini
 include LICENSE
 include CONTRIBUTING.md
 include README.md
-include AIShiftScheduler_KE5/shift_scheduler_data.xlsx
 recursive-exclude * __pycache__
