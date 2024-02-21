@@ -42,8 +42,8 @@ MODES = ['TRAIN', 'EVALU']
 # MODES = ['INFER']
 
 # %% ../nbs/02_config.ipynb 10
-# BASE_DIR = '.'
-BASE_DIR = '..'
+BASE_DIR = '.'
+# BASE_DIR = '..'
 FILE_NAME = 'shift_scheduler_data.xlsx'
 
 # %% ../nbs/02_config.ipynb 11
