@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 ## !pip install -U "ray"
 # import ray
 # import json
+import random
 
 # from AIShiftScheduler_KE5.config import *
 import AIShiftScheduler_KE5.config as cf
