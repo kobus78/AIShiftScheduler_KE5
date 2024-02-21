@@ -43,6 +43,7 @@ MODES = ['TRAIN', 'EVALU']
 
 # %% ../nbs/02_config.ipynb 11
 # based on https://github.com/MannLabs/alphapept/blob/master/nbs/10_constants.ipynb
+# put data file in 'package' folder (AIShiftScheduler_KE5), i.e. not in 'nbs' folder
 import os
 try:
     base = os.path.dirname(os.path.abspath(__file__)) #Cant do this in notebook
