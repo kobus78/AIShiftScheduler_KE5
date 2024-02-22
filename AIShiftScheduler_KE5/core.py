@@ -8,7 +8,7 @@ __all__ = ['V', 'Labels', 'ThetasCumSlots', 'ThetasSickProb', 'ThetasCumMerits',
            'Df_last_n_t', 'end', 'ThetaStar_expCbarcum_Alloc_evalu_opt', 'ThetaStar_expCtilcum_Alloc_evalu_opt',
            'Best_theta_Alloc_evalu_opt', 'Worst_theta_Alloc_evalu_opt', 'Record_Alloc_evalu_opt', 'Df_Alloc_evalu_opt',
            'ThetaStar_expCbarcum_Alloc_evalu_non', 'ThetaStar_expCtilcum_Alloc_evalu_non', 'Best_theta_Alloc_evalu_non',
-           'Worst_theta_Alloc_evalu_non', 'Record_Alloc_evalu_non', 'Df_Alloc_evalu_non']
+           'Worst_theta_Alloc_evalu_non', 'Record_Alloc_evalu_non', 'Df_Alloc_evalu_non', 'best_theta_Alloc']
 
 # %% ../nbs/00_core.ipynb 4
 # from collections import namedtuple, defaultdict
@@ -186,6 +186,10 @@ Df_Alloc_evalu_non = pd.DataFrame.from_records(
   Record_Alloc_evalu_non[:First_n_t], columns=Labels)
 print(f'{ThetaStar_expCbarcum_Alloc_evalu_non.iloc[-1]=:.2f}')
 end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
+
+# %% ../nbs/00_core.ipynb 72
+## from storage
+best_theta_Alloc = inf.get_best_theta_Alloc(); best_theta_Alloc
 
 # %% ../nbs/00_core.ipynb 73
 start = time.time()
