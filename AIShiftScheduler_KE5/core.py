@@ -45,7 +45,7 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_colwidth', None)
 
-# %% ../nbs/00_core.ipynb 30
+# %% ../nbs/00_core.ipynb 29
 ThetasCumSlots = np.arange(cf.TH_CumSlots_SPEC[0], cf.TH_CumSlots_SPEC[1], cf.TH_CumSlots_SPEC[2])
 ## ThetasCumSlots = TH_CumSlots_SPEC
 
@@ -80,7 +80,7 @@ Thetas = [
     for tup in thetas_list
 ]
 
-# %% ../nbs/00_core.ipynb 31
+# %% ../nbs/00_core.ipynb 30
 start = time.time()
 ray.shutdown()
 ray.init()
@@ -103,6 +103,27 @@ Df_first_n_t = pd.DataFrame.from_records(Record_Alloc[:First_n_t], columns=Label
 Df_last_n_t = pd.DataFrame.from_records(Record_Alloc[-Last_n_t:], columns=Labels)
 end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
 
+# %% ../nbs/00_core.ipynb 47
+start = time.time()
+## to test
+# if 'EVALU' in cf.MODES:
+L = 2 #20 #5 #2 #2db #10pub
+T = 7*cf.SLOTS_PER_DAY #=672
+First_n_t = int(.11*L*T)
+
+ThetaStar_expCbarcum_Alloc_evalu_opt, ThetaStar_expCtilcum_Alloc_evalu_opt, \
+_, _, \
+Best_theta_Alloc_evalu_opt, Worst_theta_Alloc_evalu_opt, \
+_, _, \
+_, _, \
+Record_Alloc_evalu_opt = \
+  evl.do_evalu_opt(L, T, Best_theta_Alloc)
+
+Df_Alloc_evalu_opt = pd.DataFrame.from_records(
+  Record_Alloc_evalu_opt[:First_n_t], columns=Labels)
+print(f'{ThetaStar_expCbarcum_Alloc_evalu_opt.iloc[-1]=:.2f}')
+end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
+
 # %% ../nbs/00_core.ipynb 48
 start = time.time()
 ## to test
@@ -111,27 +132,6 @@ L = 2 #20 #5 #2 #2db #10pub
 T = 7*cf.SLOTS_PER_DAY #=672
 First_n_t = int(.11*L*T)
 
-ThetaStar_expCbarcum_Alloc_evalu_opt, ThetaStar_expCtilcum_Alloc_evalu_opt, \
-_, _, \
-Best_theta_Alloc_evalu_opt, Worst_theta_Alloc_evalu_opt, \
-_, _, \
-_, _, \
-Record_Alloc_evalu_opt = \
-  evl.do_evalu_opt(L, T, Best_theta_Alloc)
-
-Df_Alloc_evalu_opt = pd.DataFrame.from_records(
-  Record_Alloc_evalu_opt[:First_n_t], columns=Labels)
-print(f'{ThetaStar_expCbarcum_Alloc_evalu_opt.iloc[-1]=:.2f}')
-end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
-
-# %% ../nbs/00_core.ipynb 49
-start = time.time()
-## to test
-# if 'EVALU' in cf.MODES:
-L = 2 #20 #5 #2 #2db #10pub
-T = 7*cf.SLOTS_PER_DAY #=672
-First_n_t = int(.11*L*T)
-
 ThetaStar_expCbarcum_Alloc_evalu_non, ThetaStar_expCtilcum_Alloc_evalu_non, \
 _, _, \
 Best_theta_Alloc_evalu_non, Worst_theta_Alloc_evalu_non, \
@@ -143,6 +143,25 @@ Record_Alloc_evalu_non = \
 Df_Alloc_evalu_non = pd.DataFrame.from_records(
   Record_Alloc_evalu_non[:First_n_t], columns=Labels)
 print(f'{ThetaStar_expCbarcum_Alloc_evalu_non.iloc[-1]=:.2f}')
+end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
+
+# %% ../nbs/00_core.ipynb 52
+start = time.time()
+L = 1 #20 #5 #2 #2db #10pub
+T = 7*cf.SLOTS_PER_DAY #=672
+First_n_t = int(1*L*T)
+
+ThetaStar_expCbarcum_Alloc_evalu_opt, ThetaStar_expCtilcum_Alloc_evalu_opt, \
+_, _, \
+Best_theta_Alloc_evalu_opt, Worst_theta_Alloc_evalu_opt, \
+_, _, \
+_, _, \
+Record_Alloc_evalu_opt = \
+  evl.do_evalu_opt(L, T, Best_theta_Alloc)
+
+Df_Alloc_evalu_opt = pd.DataFrame.from_records(
+  Record_Alloc_evalu_opt[:First_n_t], columns=Labels)
+print(f'{ThetaStar_expCbarcum_Alloc_evalu_opt.iloc[-1]=:.2f}')
 end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
 
 # %% ../nbs/00_core.ipynb 53
@@ -151,25 +170,6 @@ L = 1 #20 #5 #2 #2db #10pub
 T = 7*cf.SLOTS_PER_DAY #=672
 First_n_t = int(1*L*T)
 
-ThetaStar_expCbarcum_Alloc_evalu_opt, ThetaStar_expCtilcum_Alloc_evalu_opt, \
-_, _, \
-Best_theta_Alloc_evalu_opt, Worst_theta_Alloc_evalu_opt, \
-_, _, \
-_, _, \
-Record_Alloc_evalu_opt = \
-  evl.do_evalu_opt(L, T, Best_theta_Alloc)
-
-Df_Alloc_evalu_opt = pd.DataFrame.from_records(
-  Record_Alloc_evalu_opt[:First_n_t], columns=Labels)
-print(f'{ThetaStar_expCbarcum_Alloc_evalu_opt.iloc[-1]=:.2f}')
-end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
-
-# %% ../nbs/00_core.ipynb 54
-start = time.time()
-L = 1 #20 #5 #2 #2db #10pub
-T = 7*cf.SLOTS_PER_DAY #=672
-First_n_t = int(1*L*T)
-
 ThetaStar_expCbarcum_Alloc_evalu_non, ThetaStar_expCtilcum_Alloc_evalu_non, \
 _, _, \
 Best_theta_Alloc_evalu_non, Worst_theta_Alloc_evalu_non, \
@@ -183,7 +183,7 @@ Df_Alloc_evalu_non = pd.DataFrame.from_records(
 print(f'{ThetaStar_expCbarcum_Alloc_evalu_non.iloc[-1]=:.2f}')
 end = time.time(); print(f'EXECUTION TIME: {end - start} seconds')
 
-# %% ../nbs/00_core.ipynb 74
+# %% ../nbs/00_core.ipynb 73
 start = time.time()
 L = 1
 T = 7*cf.SLOTS_PER_DAY
