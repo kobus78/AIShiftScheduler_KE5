@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Model of the environment | System-Under-Steer">
+
+<title>AIShiftScheduler_KE5 - model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="AIShiftScheduler_KE5 - model">
+<meta property="og:description" content="Model of the environment | System-Under-Steer">
+<meta property="og:site_name" content="AIShiftScheduler_KE5">
+<meta name="twitter:title" content="AIShiftScheduler_KE5 - model">
+<meta name="twitter:description" content="Model of the environment | System-Under-Steer">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AIShiftScheduler_KE5</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model.html">model</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./-tut_00_core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AIShiftScheduler_KE5</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loader.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">loader</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./config.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">config</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simulators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">simulators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">model</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">policy</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trainer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">trainer</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./evaluator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">evaluator</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inferencer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">inferencer</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model">Model</a></li>
+  <li><a href="#model.w_fn" id="toc-model.w_fn" class="nav-link" data-scroll-target="#model.w_fn">Model.W_fn</a></li>
+  <li><a href="#model.update_ccum" id="toc-model.update_ccum" class="nav-link" data-scroll-target="#model.update_ccum">Model.update_Ccum</a></li>
+  <li><a href="#model.performallocdecision" id="toc-model.performallocdecision" class="nav-link" data-scroll-target="#model.performallocdecision">Model.performAllocDecision</a></li>
+  <li><a href="#model.s__m_fn" id="toc-model.s__m_fn" class="nav-link" data-scroll-target="#model.s__m_fn">Model.S__M_fn</a></li>
+  <li><a href="#model.c_fn" id="toc-model.c_fn" class="nav-link" data-scroll-target="#model.c_fn">Model.C_fn</a></li>
+  <li><a href="#model.step" id="toc-model.step" class="nav-link" data-scroll-target="#model.step">Model.step</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/kobus78/AIShiftScheduler_KE5/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">model</h1>
+</div>
+
+<div>
+  <div class="description">
+    Model of the environment | System-Under-Steer
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up autoreload</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pd.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'2.0.3'</code></pre>
+</div>
+</div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip freeze | grep pandas</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip freeze|grep openpyxl</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip freeze</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-5" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install -U ray==2.8.1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install openpyxl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyClass(<span class="bu">int</span>): <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@patch</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(<span class="va">self</span>: MyClass, a): <span class="cf">return</span> <span class="va">self</span> <span class="op">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-8" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mc <span class="op">=</span> MyClass(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mc.func(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>13</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L36" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="model" class="level3">
+<h3 class="anchored" data-anchor-id="model">Model</h3>
+<blockquote class="blockquote">
+<pre><code> Model ()</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<div id="cell-11" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> Model()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-12" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @patch</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># def reset(self:Model):</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   self.Ccum = 0.0</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   self.Ucum = 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L106" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.w_fn" class="level3">
+<h3 class="anchored" data-anchor-id="model.w_fn">Model.W_fn</h3>
+<blockquote class="blockquote">
+<pre><code> Model.W_fn (t, dt)</code></pre>
+</blockquote>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>t</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>dt</td>
+<td># exogenous information</td>
+</tr>
+</tbody>
+</table>
+<div id="cell-14" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-15" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> pd.to_datetime(cf.START_DATE_TIME)<span class="op">;</span> dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Timestamp('2023-12-04 00:00:00')</code></pre>
+</div>
+</div>
+<div id="cell-16" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>M.W_fn(t, dt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'demands': {'Manager': 0, 'AssistMngr': 0, 'RetailAssoc': 0},
+ 'merits': {'Manager_Matt': 0,
+  'AssistMngr_Mike': 1,
+  'AssistMngr_Tanner': 0,
+  'RetailAssoc_Jake': 0,
+  'RetailAssoc_James': 1,
+  'RetailAssoc_Jane': 0,
+  'RetailAssoc_John': 0,
+  'RetailAssoc_Jim': 0,
+  'RetailAssoc_Jenny': 0,
+  'RetailAssoc_Jeremy': 0,
+  'RetailAssoc_Judy': 0,
+  'RetailAssoc_Julie': 0,
+  'RetailAssoc_Jeffrey': 0},
+ 'availabilities': 0     0
+ 1     0
+ 2     0
+ 3     0
+ 4     0
+ 5     0
+ 6     0
+ 7     0
+ 8     0
+ 9     0
+ 10    0
+ 11    0
+ 12    0
+ Name: 0, dtype: int64,
+ 'busyness': 0,
+ 'volume': 0,
+ 'revenue': 0.0}</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L127" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.update_ccum" class="level3">
+<h3 class="anchored" data-anchor-id="model.update_ccum">Model.update_Ccum</h3>
+<blockquote class="blockquote">
+<pre><code> Model.update_Ccum (t, dt, S_t, x_t, theta)</code></pre>
+</blockquote>
+<div id="cell-18" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Model()<span class="op">;</span> m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;__main__.Model&gt;</code></pre>
+</div>
+</div>
+<div id="cell-19" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> pd.to_datetime(cf.START_DATE_TIME)<span class="op">;</span> dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Timestamp('2023-12-04 00:00:00')</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>S_t <span class="op">=</span> m.S_t<span class="op">;</span> S_t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'R_t':    ResourceId         Type  RAvail_t  RCumSlots_t  RCumMerits_t  RComplete_t
+ 0        Matt      Manager         0            0             0            0
+ 1        Mike   AssistMngr         0            0             0            0
+ 2      Tanner   AssistMngr         0            0             0            0
+ 3        Jake  RetailAssoc         0            0             0            0
+ 4       James  RetailAssoc         0            0             0            0
+ 5        Jane  RetailAssoc         0            0             0            0
+ 6        John  RetailAssoc         0            0             0            0
+ 7         Jim  RetailAssoc         0            0             0            0
+ 8       Jenny  RetailAssoc         0            0             0            0
+ 9      Jeremy  RetailAssoc         0            0             0            0
+ 10       Judy  RetailAssoc         0            0             0            0
+ 11      Julie  RetailAssoc         0            0             0            0
+ 12    Jeffrey  RetailAssoc         0            0             0            0,
+ 'D_t':           Type  DSlot_t  DBusy_t  DVolume_t  DRevenue_t  DMax_t
+ 0      Manager        1        0          0           0       0
+ 1   AssistMngr        1        0          0           0       0
+ 2  RetailAssoc        1        0          0           0       0,
+ 'M_t':    ResourceId         Type  nMerits_t
+ 0        Matt      Manager          0
+ 1        Mike   AssistMngr          0
+ 2      Tanner   AssistMngr          0
+ 3        Jake  RetailAssoc          0
+ 4       James  RetailAssoc          0
+ 5        Jane  RetailAssoc          0
+ 6        John  RetailAssoc          0
+ 7         Jim  RetailAssoc          0
+ 8       Jenny  RetailAssoc          0
+ 9      Jeremy  RetailAssoc          0
+ 10       Judy  RetailAssoc          0
+ 11      Julie  RetailAssoc          0
+ 12    Jeffrey  RetailAssoc          0,
+ 'B_t':    Busy_t
+ 0       0,
+ 'V_t':    Volume_t
+ 0         0,
+ 'N_t':    Revenue_t
+ 0          0,
+ 'xAlloc_t_1':                                  Comb  Allocd_t
+ 0              Manager_Matt___Manager     False
+ 1        AssistMngr_Mike___AssistMngr     False
+ 2      AssistMngr_Tanner___AssistMngr     False
+ 3      RetailAssoc_Jake___RetailAssoc     False
+ 4     RetailAssoc_James___RetailAssoc     False
+ 5      RetailAssoc_Jane___RetailAssoc     False
+ 6      RetailAssoc_John___RetailAssoc     False
+ 7       RetailAssoc_Jim___RetailAssoc     False
+ 8     RetailAssoc_Jenny___RetailAssoc     False
+ 9    RetailAssoc_Jeremy___RetailAssoc     False
+ 10     RetailAssoc_Judy___RetailAssoc     False
+ 11    RetailAssoc_Julie___RetailAssoc     False
+ 12  RetailAssoc_Jeffrey___RetailAssoc     False}</code></pre>
+</div>
+</div>
+<div id="cell-21" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x_t <span class="op">=</span> m.x_t<span class="op">;</span> x_t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'xAlloc_t':                                  Comb  Allocd_t
+ 0              Manager_Matt___Manager     False
+ 1        AssistMngr_Mike___AssistMngr     False
+ 2      AssistMngr_Tanner___AssistMngr     False
+ 3      RetailAssoc_Jake___RetailAssoc     False
+ 4     RetailAssoc_James___RetailAssoc     False
+ 5      RetailAssoc_Jane___RetailAssoc     False
+ 6      RetailAssoc_John___RetailAssoc     False
+ 7       RetailAssoc_Jim___RetailAssoc     False
+ 8     RetailAssoc_Jenny___RetailAssoc     False
+ 9    RetailAssoc_Jeremy___RetailAssoc     False
+ 10     RetailAssoc_Judy___RetailAssoc     False
+ 11    RetailAssoc_Julie___RetailAssoc     False
+ 12  RetailAssoc_Jeffrey___RetailAssoc     False}</code></pre>
+</div>
+</div>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> pol.Policy(M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-23" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> P.build_theta({</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thCumSlots'</span>: <span class="fl">.1</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thSickProb'</span>: <span class="fl">.3</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thCumMerits'</span>: <span class="fl">.2</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thContSlots'</span>: <span class="dv">1</span> <span class="op">-</span> (<span class="fl">.6</span>),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thSelect'</span>: <span class="st">'random'</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span> theta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Theta(thCumSlots=0.1, thSickProb=0.3, thCumMerits=0.2, thContSlots=0.4, thSelect='random')</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L196" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.performallocdecision" class="level3">
+<h3 class="anchored" data-anchor-id="model.performallocdecision">Model.performAllocDecision</h3>
+<blockquote class="blockquote">
+<pre><code> Model.performAllocDecision (S_t, x_t, theta)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L219" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.s__m_fn" class="level3">
+<h3 class="anchored" data-anchor-id="model.s__m_fn">Model.S__M_fn</h3>
+<blockquote class="blockquote">
+<pre><code> Model.S__M_fn (t, dt, S_t, x_t, W_tt1, theta)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L337" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.c_fn" class="level3">
+<h3 class="anchored" data-anchor-id="model.c_fn">Model.C_fn</h3>
+<blockquote class="blockquote">
+<pre><code> Model.C_fn (S_t, x_t, W_tt1, theta)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/kobus78/AIShiftScheduler_KE5/blob/main/AIShiftScheduler_KE5/model.py#L342" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="model.step" class="level3">
+<h3 class="anchored" data-anchor-id="model.step">Model.step</h3>
+<blockquote class="blockquote">
+<pre><code> Model.step (t, dt, theta)</code></pre>
+</blockquote>
+</section>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hide</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># QUICK STEP</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_S_t():</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'M.S_t["R_t"]=</span><span class="ch">\n</span><span class="sc">{</span>M<span class="sc">.</span>S_t[<span class="st">"R_t"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'M.S_t["D_t"]=</span><span class="ch">\n</span><span class="sc">{</span>M<span class="sc">.</span>S_t[<span class="st">"D_t"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_x_t():</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># print(f'x_t.x_t= {x_t.x_t}')</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'M.x_t["xAlloc_t"]=</span><span class="ch">\n</span><span class="sc">{</span>M<span class="sc">.</span>x_t[<span class="st">"xAlloc_t"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>record <span class="op">=</span> []</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> Model()</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> pol.Policy(M)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="co">## DEM = DemandSimulator(seed=SEED_TRAIN); print(f'{DEM.simulate()=}')</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co">## MER = MeritSimulator(seed=SEED_TRAIN); print(f'{MER.simulate()=}')</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>theta_test <span class="op">=</span> P.build_theta({</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thCumSlots'</span>: <span class="fl">.1</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thSickProb'</span>: <span class="fl">.3</span>,</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thCumMerits'</span>: <span class="fl">.2</span>,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thContSlots'</span>: <span class="dv">1</span> <span class="op">-</span> (<span class="fl">.6</span>),</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">'thSelect'</span>: <span class="st">'random'</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>record_l <span class="op">=</span> [cf.piNAMES[<span class="dv">0</span>], theta_test, l]<span class="op">;</span> <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>record_l<span class="op">=</span><span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>print_S_t()</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>print_x_t()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>record_l=['X__Alloc', Theta(thCumSlots=0.1, thSickProb=0.3, thCumMerits=0.2, thContSlots=0.4, thSelect='random'), 1]
+M.S_t["R_t"]=
+   ResourceId         Type  RAvail_t  RCumSlots_t  RCumMerits_t  RComplete_t
+0        Matt      Manager         0            0             0            0
+1        Mike   AssistMngr         0            0             0            0
+2      Tanner   AssistMngr         0            0             0            0
+3        Jake  RetailAssoc         0            0             0            0
+4       James  RetailAssoc         0            0             0            0
+5        Jane  RetailAssoc         0            0             0            0
+6        John  RetailAssoc         0            0             0            0
+7         Jim  RetailAssoc         0            0             0            0
+8       Jenny  RetailAssoc         0            0             0            0
+9      Jeremy  RetailAssoc         0            0             0            0
+10       Judy  RetailAssoc         0            0             0            0
+11      Julie  RetailAssoc         0            0             0            0
+12    Jeffrey  RetailAssoc         0            0             0            0
+M.S_t["D_t"]=
+          Type  DSlot_t  DBusy_t  DVolume_t  DRevenue_t  DMax_t
+0      Manager        1        0          0           0       0
+1   AssistMngr        1        0          0           0       0
+2  RetailAssoc        1        0          0           0       0
+M.x_t["xAlloc_t"]=
+                                 Comb  Allocd_t
+0              Manager_Matt___Manager     False
+1        AssistMngr_Mike___AssistMngr     False
+2      AssistMngr_Tanner___AssistMngr     False
+3      RetailAssoc_Jake___RetailAssoc     False
+4     RetailAssoc_James___RetailAssoc     False
+5      RetailAssoc_Jane___RetailAssoc     False
+6      RetailAssoc_John___RetailAssoc     False
+7       RetailAssoc_Jim___RetailAssoc     False
+8     RetailAssoc_Jenny___RetailAssoc     False
+9    RetailAssoc_Jeremy___RetailAssoc     False
+10     RetailAssoc_Judy___RetailAssoc     False
+11    RetailAssoc_Julie___RetailAssoc     False
+12  RetailAssoc_Jeffrey___RetailAssoc     False</code></pre>
+</div>
+</div>
+<div id="cell-30" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">## hide</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># T = 7*24</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># T = 2*24</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># T = 1*SLOTS_PER_DAY</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># T = 2*SLOTS_PER_DAY</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> pd.to_datetime(cf.START_DATE_TIME)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>dt_delta <span class="op">=</span> pd.Timedelta(cf.DATE_TIME_DELTA)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">################# t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, dt=</span><span class="sc">{</span>dt<span class="sc">}</span><span class="ss"> #################'</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># getattr(P, 'X__AllocBelow')(t, M.S_t, M.x_t, theta_test); #print(f'{x_t=}')</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">getattr</span>(P, <span class="st">'X__Alloc'</span>)(t, dt, M.S_t, M.x_t, theta_test)<span class="op">;</span> <span class="co">#print(f'{x_t=}')</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  print_S_t()</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  print_x_t()</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># record_t = M.step(t, theta_test)</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  record_t <span class="op">=</span> M.step(t, dt, theta_test)</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">AFTER STEP:'</span>)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>  record.append(record_l <span class="op">+</span> record_t)<span class="op">;</span> <span class="co">#print(f'{record=}')</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  dt <span class="op">=</span> dt <span class="op">+</span> dt_delta</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># print_S_t()</span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># print(f'{M.Ccum=}')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+################# t=0, dt=2023-12-04 00:00:00 #################
+M.S_t["R_t"]=
+   ResourceId         Type  RAvail_t  RCumSlots_t  RCumMerits_t  RComplete_t
+0        Matt      Manager         0            0             0            0
+1        Mike   AssistMngr         0            0             0            0
+2      Tanner   AssistMngr         0            0             0            0
+3        Jake  RetailAssoc         0            0             0            0
+4       James  RetailAssoc         0            0             0            0
+5        Jane  RetailAssoc         0            0             0            0
+6        John  RetailAssoc         0            0             0            0
+7         Jim  RetailAssoc         0            0             0            0
+8       Jenny  RetailAssoc         0            0             0            0
+9      Jeremy  RetailAssoc         0            0             0            0
+10       Judy  RetailAssoc         0            0             0            0
+11      Julie  RetailAssoc         0            0             0            0
+12    Jeffrey  RetailAssoc         0            0             0            0
+M.S_t["D_t"]=
+          Type  DSlot_t  DBusy_t  DVolume_t  DRevenue_t  DMax_t
+0      Manager        1        0          0           0       0
+1   AssistMngr        1        0          0           0       0
+2  RetailAssoc        1        0          0           0       0
+M.x_t["xAlloc_t"]=
+                                 Comb  Allocd_t
+0              Manager_Matt___Manager     False
+1        AssistMngr_Mike___AssistMngr     False
+2      AssistMngr_Tanner___AssistMngr     False
+3      RetailAssoc_Jake___RetailAssoc     False
+4     RetailAssoc_James___RetailAssoc     False
+5      RetailAssoc_Jane___RetailAssoc     False
+6      RetailAssoc_John___RetailAssoc     False
+7       RetailAssoc_Jim___RetailAssoc     False
+8     RetailAssoc_Jenny___RetailAssoc     False
+9    RetailAssoc_Jeremy___RetailAssoc     False
+10     RetailAssoc_Judy___RetailAssoc     False
+11    RetailAssoc_Julie___RetailAssoc     False
+12  RetailAssoc_Jeffrey___RetailAssoc     False
+
+AFTER STEP:
+
+################# t=1, dt=2023-12-04 01:00:00 #################
+M.S_t["R_t"]=
+   ResourceId         Type  RAvail_t  RCumSlots_t  RCumMerits_t  RComplete_t
+0        Matt      Manager         0            0             0            0
+1        Mike   AssistMngr         0            0             1            0
+2      Tanner   AssistMngr         0            0             0            0
+3        Jake  RetailAssoc         0            0             0            0
+4       James  RetailAssoc         0            0             1            0
+5        Jane  RetailAssoc         0            0             0            0
+6        John  RetailAssoc         0            0             0            0
+7         Jim  RetailAssoc         0            0             0            0
+8       Jenny  RetailAssoc         0            0             0            0
+9      Jeremy  RetailAssoc         0            0             0            0
+10       Judy  RetailAssoc         0            0             0            0
+11      Julie  RetailAssoc         0            0             0            0
+12    Jeffrey  RetailAssoc         0            0             0            0
+M.S_t["D_t"]=
+          Type  DSlot_t  DBusy_t  DVolume_t  DRevenue_t  DMax_t
+0      Manager        0        0          0           0       0
+1   AssistMngr        0        0          0           0       0
+2  RetailAssoc        0        0          0           0       0
+M.x_t["xAlloc_t"]=
+                                 Comb  Allocd_t
+0              Manager_Matt___Manager     False
+1        AssistMngr_Mike___AssistMngr     False
+2      AssistMngr_Tanner___AssistMngr     False
+3      RetailAssoc_Jake___RetailAssoc     False
+4     RetailAssoc_James___RetailAssoc     False
+5      RetailAssoc_Jane___RetailAssoc     False
+6      RetailAssoc_John___RetailAssoc     False
+7       RetailAssoc_Jim___RetailAssoc     False
+8     RetailAssoc_Jenny___RetailAssoc     False
+9    RetailAssoc_Jeremy___RetailAssoc     False
+10     RetailAssoc_Judy___RetailAssoc     False
+11    RetailAssoc_Julie___RetailAssoc     False
+12  RetailAssoc_Jeffrey___RetailAssoc     False
+
+AFTER STEP:</code></pre>
+</div>
+</div>
+<div id="cell-31" class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">## hide</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> vis.Visualization()</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>Labels <span class="op">=</span> V.setup_plot_labels()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-32" class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df_test_n_t <span class="op">=</span> pd.DataFrame.from_records(record, columns<span class="op">=</span>Labels)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df_test_n_t.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">piName</th>
+<th data-quarto-table-cell-role="th">theta</th>
+<th data-quarto-table-cell-role="th">l</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">dt</th>
+<th data-quarto-table-cell-role="th">RAvail_t_Manager_Matt</th>
+<th data-quarto-table-cell-role="th">RAvail_t_AssistMngr_Mike</th>
+<th data-quarto-table-cell-role="th">RAvail_t_AssistMngr_Tanner</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jake</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_James</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jane</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_John</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jim</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jenny</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jeremy</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Judy</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Julie</th>
+<th data-quarto-table-cell-role="th">RAvail_t_RetailAssoc_Jeffrey</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_Manager_Matt</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_AssistMngr_Mike</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_AssistMngr_Tanner</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jake</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_James</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jane</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_John</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jim</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jenny</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jeremy</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Judy</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Julie</th>
+<th data-quarto-table-cell-role="th">RCumSlots_t_RetailAssoc_Jeffrey</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_Manager_Matt</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_AssistMngr_Mike</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_AssistMngr_Tanner</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jake</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_James</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jane</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_John</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jim</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jenny</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jeremy</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Judy</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Julie</th>
+<th data-quarto-table-cell-role="th">RCumMerits_t_RetailAssoc_Jeffrey</th>
+<th data-quarto-table-cell-role="th">RComplete_t_Manager_Matt</th>
+<th data-quarto-table-cell-role="th">RComplete_t_AssistMngr_Mike</th>
+<th data-quarto-table-cell-role="th">RComplete_t_AssistMngr_Tanner</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jake</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_James</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jane</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_John</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jim</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jenny</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jeremy</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Judy</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Julie</th>
+<th data-quarto-table-cell-role="th">RComplete_t_RetailAssoc_Jeffrey</th>
+<th data-quarto-table-cell-role="th">DSlot_t_Manager</th>
+<th data-quarto-table-cell-role="th">DSlot_t_AssistMngr</th>
+<th data-quarto-table-cell-role="th">DSlot_t_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">DBusy_t_Manager</th>
+<th data-quarto-table-cell-role="th">DBusy_t_AssistMngr</th>
+<th data-quarto-table-cell-role="th">DBusy_t_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">DVolume_t_Manager</th>
+<th data-quarto-table-cell-role="th">DVolume_t_AssistMngr</th>
+<th data-quarto-table-cell-role="th">DVolume_t_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">DRevenue_t_Manager</th>
+<th data-quarto-table-cell-role="th">DRevenue_t_AssistMngr</th>
+<th data-quarto-table-cell-role="th">DRevenue_t_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">DMax_t_Manager</th>
+<th data-quarto-table-cell-role="th">DMax_t_AssistMngr</th>
+<th data-quarto-table-cell-role="th">DMax_t_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">B_t</th>
+<th data-quarto-table-cell-role="th">V_t</th>
+<th data-quarto-table-cell-role="th">N_t</th>
+<th data-quarto-table-cell-role="th">Ucum_Manager</th>
+<th data-quarto-table-cell-role="th">Ucum_AssistMngr</th>
+<th data-quarto-table-cell-role="th">Ucum_RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Ucum_Total</th>
+<th data-quarto-table-cell-role="th">Ccum_CumSlots</th>
+<th data-quarto-table-cell-role="th">Ccum_SickProb</th>
+<th data-quarto-table-cell-role="th">Ccum_CumMerits</th>
+<th data-quarto-table-cell-role="th">Ccum_ContSlots</th>
+<th data-quarto-table-cell-role="th">Ccum</th>
+<th data-quarto-table-cell-role="th">Allocd_t_Manager_Matt___Manager</th>
+<th data-quarto-table-cell-role="th">Allocd_t_AssistMngr_Mike___AssistMngr</th>
+<th data-quarto-table-cell-role="th">Allocd_t_AssistMngr_Tanner___AssistMngr</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jake___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_James___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jane___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_John___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jim___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jenny___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jeremy___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Judy___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Julie___RetailAssoc</th>
+<th data-quarto-table-cell-role="th">Allocd_t_RetailAssoc_Jeffrey___RetailAssoc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>X__Alloc</td>
+<td>(0.1, 0.3, 0.2, 0.4, random)</td>
+<td>1</td>
+<td>0</td>
+<td>2023-12-04 00:00:00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>X__Alloc</td>
+<td>(0.1, 0.3, 0.2, 0.4, random)</td>
+<td>1</td>
+<td>1</td>
+<td>2023-12-04 01:00:00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>-1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>-1</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-33" class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">## hide</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>V.plot_records(</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  df<span class="op">=</span>df_test_n_t,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  df_non<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  pars<span class="op">=</span>defaultdict(<span class="bu">str</span>, {</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'thetaAdj1': {a1n: theta_test.thAdj1[a1n] for a1n in a1NAMES},</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'thetaAdj3': {a1n: theta_test.thAdj3[a1n] for a1n in a1NAMES},</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'suptitle': f'TRAINING OF X__AdjBelow POLICY'+'\n'+f'(first {first_n_t} records)'+'\n'+ \</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># f'L = {L}, T = {T}, '+ \</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># r'$\theta^*=$'+f'{P.round_theta(best_theta_AdjBelow)}',</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'T'</span>: T</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  }),</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/kobus/AIShiftScheduler_KE5/AIShiftScheduler_KE5/visualization.py:429: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  axs[xi+i].set_ylim(0, ymax); axs[xi+i].spines['top'].set_visible(False); axs[xi+i].spines['right'].set_visible(True); axs[xi+i].spines['bottom'].set_visible(False)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_model_files/figure-html/cell-32-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kobus78/AIShiftScheduler_KE5/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
